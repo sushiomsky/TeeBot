@@ -41,3 +41,7 @@ copyright/
 # Idea
 *.ipr
 *.iws
+
+#security sensitive files
+BotConfig.java
+BuildVars.java
