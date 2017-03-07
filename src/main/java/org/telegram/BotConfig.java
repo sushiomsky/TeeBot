@@ -28,6 +28,6 @@ public class BotConfig {
     public static final String WEBHOOK_TOKEN = "<token>";
     public static final String WEBHOOK_USER = "webhooksamplebot";
 
-    public static final String COMMANDS_TOKEN = "<token>";
-    public static final String COMMANDS_USER = "MyCommandsBot";
+    public static final String COMMANDS_TOKEN = "297094488:AAHxQhVrHqT2X9M19QnfHFLL8ykl0CZpc0U";
+    public static final String COMMANDS_USER = "BitnaesserBot";
 }
