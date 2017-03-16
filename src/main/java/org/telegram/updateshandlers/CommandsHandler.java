@@ -10,8 +10,12 @@ import org.telegram.services.Emoji;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.bots.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.exceptions.TelegramApiValidationException;
 import org.telegram.telegrambots.logging.BotLogger;
 
 /**
@@ -28,8 +32,8 @@ public class CommandsHandler extends TelegramLongPollingCommandBot {
      */
     public CommandsHandler() {
         register(new HelloCommand());
-        register(new StartCommand());
-        register(new StopCommand());
+       // register(new StartCommand());
+       // register(new StopCommand());
         HelpCommand helpCommand = new HelpCommand(this);
         register(helpCommand);
 
@@ -51,22 +55,25 @@ public class CommandsHandler extends TelegramLongPollingCommandBot {
 
         if (update.hasMessage()) {
             Message message = update.getMessage();
+            DatabaseManager.getInstance().logMsg(message.getFrom().getId(), message.getText());
 
+        /*
             if (!DatabaseManager.getInstance().getUserStateForCommandsBot(message.getFrom().getId())) {
                 return;
             }
+        */
 
-            if (message.hasText()) {
+            //if (message.hasText()) {
                 SendMessage echoMessage = new SendMessage();
                 echoMessage.setChatId(message.getChatId());
-                echoMessage.setText("Hey heres your message:\n" + message.getText());
+                echoMessage.setText(DatabaseManager.getInstance().getRandomMsg());
 
                 try {
                     sendMessage(echoMessage);
                 } catch (TelegramApiException e) {
                     BotLogger.error(LOGTAG, e);
                 }
-            }
+           // }
         }
     }
 

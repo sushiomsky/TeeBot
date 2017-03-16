@@ -43,5 +43,5 @@ copyright/
 *.iws
 
 #security sensitive files
-BotConfig.java
-BuildVars.java
+#BotConfig.java
+#BuildVars.java

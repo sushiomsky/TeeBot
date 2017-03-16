@@ -508,7 +508,7 @@ public class DatabaseManager {
     }
 
     public String[] getUserWeatherOptions(Integer userId) {
-        String[] options = new String[] {"en", "metric"};
+        String[] options = new String[]{"en", "metric"};
         try {
             final PreparedStatement preparedStatement = connetion.getPreparedStatement("SELECT * FROM UserWeatherOptions WHERE userId = ?");
             preparedStatement.setInt(1, userId);
@@ -636,5 +636,30 @@ public class DatabaseManager {
         }
 
         return allAlerts;
+    }
+
+    public boolean logMsg(int userId, String msg) {
+        int updatedRows = 0;
+        try {
+            final PreparedStatement preparedStatement = connetion.getPreparedStatement("INSERT INTO Messages (userId, message) VALUES (?,?)");
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, msg);
+            updatedRows = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return updatedRows > 0;
+    }
+
+    public String getRandomMsg() {
+        try {
+            final PreparedStatement preparedStatement = connetion.getPreparedStatement("SELECT * FROM Messages ORDER BY RAND() DESC LIMIT 10");
+            final ResultSet result = preparedStatement.executeQuery();
+            result.next();
+            return result.getString("message");
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return "Dennis should repair me! I lost DB connectivity :(";
+        }
     }
 }

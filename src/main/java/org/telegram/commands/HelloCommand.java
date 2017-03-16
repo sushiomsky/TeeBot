@@ -4,15 +4,14 @@ import org.telegram.database.DatabaseManager;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Chat;
 import org.telegram.telegrambots.api.objects.User;
+import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.AbsSender;
 import org.telegram.telegrambots.bots.commands.BotCommand;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
 /**
- * This command simply replies with a hello to the users command and
- * sends them the 'kind' words back, which they send via command parameters
- *
+ * This commands starts the conversation with the bot
  * @author Timo Schulz (Mit0x2)
  */
 public class HelloCommand extends BotCommand {
@@ -20,31 +19,32 @@ public class HelloCommand extends BotCommand {
     private static final String LOGTAG = "HELLOCOMMAND";
 
     public HelloCommand() {
-        super("hello", "Say hallo to this bot");
+        super("hello", "As a polite bot I let you start the conversation.");
     }
 
     @Override
-    public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
+    public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
+        DatabaseManager databseManager = DatabaseManager.getInstance();
+        StringBuilder messageBuilder = new StringBuilder();
 
-        if (!DatabaseManager.getInstance().getUserStateForCommandsBot(user.getId())) {
-            return;
+        String userName = user.getFirstName() + " " + user.getLastName();
+
+        if (databseManager.getUserStateForCommandsBot(user.getId())) {
+            messageBuilder.append("Hi ").append(userName).append("\n");
+        //    messageBuilder.append("i think we know each other already!");
+        } else {
+            databseManager.setUserStateForCommandsBot(user.getId(), true);
+            messageBuilder.append("Welcome ").append(userName).append("\n");
+          //  messageBuilder.append("this bot will demonstrate you the command feature of the Java TelegramBots API!");
         }
 
-        String userName = chat.getUserName();
-        if (userName == null || userName.isEmpty()) {
-            userName = user.getFirstName() + " " + user.getLastName();
-        }
-
-        StringBuilder messageTextBuilder = new StringBuilder("Hello ").append(userName);
-        if (arguments != null && arguments.length > 0) {
-            messageTextBuilder.append("\n");
-            messageTextBuilder.append("Thank you so much for your kind words:\n");
-            messageTextBuilder.append(String.join(" ", arguments));
-        }
-
+/*
+        InlineKeyboardMarkup keyboardMarkup;
+        keyboardMarkup = new InlineKeyboardMarkup();
+ */
         SendMessage answer = new SendMessage();
         answer.setChatId(chat.getId().toString());
-        answer.setText(messageTextBuilder.toString());
+        answer.setText(messageBuilder.toString());
 
         try {
             absSender.sendMessage(answer);
