@@ -5,14 +5,7 @@ import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 import org.telegram.telegrambots.logging.BotsFileHandler;
-import org.telegram.updateshandlers.ChannelHandlers;
-import org.telegram.updateshandlers.CommandsHandler;
-import org.telegram.updateshandlers.DirectionsHandlers;
-import org.telegram.updateshandlers.FilesHandlers;
-import org.telegram.updateshandlers.RaeHandlers;
-import org.telegram.updateshandlers.TransifexHandlers;
-import org.telegram.updateshandlers.WeatherHandlers;
-import org.telegram.updateshandlers.WebHookExampleHandlers;
+import org.telegram.updateshandlers.*;
 
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
@@ -41,13 +34,12 @@ public class Main {
             TelegramBotsApi telegramBotsApi = createTelegramBotsApi();
             try {
                 // Register long polling bots. They work regardless type of TelegramBotsApi we are creating
-            /*    telegramBotsApi.registerBot(new ChannelHandlers());
-                telegramBotsApi.registerBot(new DirectionsHandlers());
-                telegramBotsApi.registerBot(new RaeHandlers());
-                telegramBotsApi.registerBot(new WeatherHandlers());
-                telegramBotsApi.registerBot(new TransifexHandlers());
-                telegramBotsApi.registerBot(new FilesHandlers());
-                */
+//                telegramBotsApi.registerBot(new ChannelHandlers());
+               // telegramBotsApi.registerBot(new DirectionsHandlers());
+//                telegramBotsApi.registerBot(new RaeHandlers());
+              //  telegramBotsApi.registerBot(new WeatherHandlers());
+              //  telegramBotsApi.registerBot(new TransifexHandlers());
+//                telegramBotsApi.registerBot(new FilesHandlers());
                 telegramBotsApi.registerBot(new CommandsHandler());
             } catch (TelegramApiException e) {
                 BotLogger.error(LOGTAG, e);

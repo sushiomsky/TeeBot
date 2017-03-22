@@ -30,7 +30,7 @@ public class ChannelHandlers extends TelegramLongPollingBot {
     private static final String AFTER_CHANNEL_TEXT = "A message to provided channel will be sent if the bot was added to it as admin.";
     private static final String WRONG_CHANNEL_TEXT = "Wrong username, please remember to add *@* before the username and send only the username.";
     private static final String CHANNEL_MESSAGE_TEXT = "This message was sent by *@updateschannelbot*. Enjoy!";
-    private static final String ERROR_MESSAGE_TEXT = "There was an error sending the message to channel *%s*, the error was: ```%s```";
+    private static final String ERROR_MESSAGE_TEXT = "There was an error sending the message to channel";
 
     private final ConcurrentHashMap<Integer, Integer> userState = new ConcurrentHashMap<>();
 
