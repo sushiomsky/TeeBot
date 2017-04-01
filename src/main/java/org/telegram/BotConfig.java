@@ -25,9 +25,12 @@ public class BotConfig {
     public static final String RAE_TOKEN = "297094488:AAHxQhVrHqT2X9M19QnfHFLL8ykl0CZpc0U";
     public static final String RAE_USER = "BitnaesserBot";
 
-    public static final String WEBHOOK_TOKEN = "339207162:AAEgM3Hd_AAmQbd0Y1mPjA_7wKLgGe1YLlE";
-    public static final String WEBHOOK_USER = "ChrootBot";
+	public static final String WEBHOOK_TOKEN = "297094488:AAHxQhVrHqT2X9M19QnfHFLL8ykl0CZpc0U";
+	public static final String WEBHOOK_USER = "BitnaesserBot";
 
-	public static final String COMMANDS_TOKEN = "339207162:AAEgM3Hd_AAmQbd0Y1mPjA_7wKLgGe1YLlE";
-	public static final String COMMANDS_USER = "ChrootBot";
+	//public static final String COMMANDS_TOKEN = "339207162:AAEgM3Hd_AAmQbd0Y1mPjA_7wKLgGe1YLlE";
+	//public static final String COMMANDS_USER = "ChrootBot";
+
+	public static final String COMMANDS_TOKEN = "297094488:AAHxQhVrHqT2X9M19QnfHFLL8ykl0CZpc0U";
+	public static final String COMMANDS_USER = "BitnaesserBot";
 }

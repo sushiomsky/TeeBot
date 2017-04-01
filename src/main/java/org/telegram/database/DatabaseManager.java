@@ -7,6 +7,7 @@
  */
 package org.telegram.database;
 
+import org.telegram.structure.FortuneAlert;
 import org.telegram.structure.WeatherAlert;
 import org.telegram.telegrambots.logging.BotLogger;
 
@@ -14,7 +15,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Ruben Bermudez
@@ -575,6 +578,19 @@ public class DatabaseManager {
         return updatedRows > 0;
     }
 
+    public boolean createNewFortuneAlert(int userId, long chatId) {
+        int updatedRows = 0;
+        try {
+            final PreparedStatement preparedStatement = connetion.getPreparedStatement("INSERT INTO FortuneAlert (userId, chatId) VALUES (?,?)");
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setLong(2, chatId);
+            updatedRows = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return updatedRows > 0;
+    }
+
     public List<String> getAlertCitiesNameByUser(int userId) {
         List<String> alertCitiesNames = new ArrayList<>();
         try {
@@ -628,6 +644,25 @@ public class DatabaseManager {
                 weatherAlert.setUserId(result.getInt("userId"));
                 weatherAlert.setCityId(result.getInt("cityId"));
                 allAlerts.add(weatherAlert);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allAlerts;
+    }
+
+    public List<FortuneAlert> getAllFortuneAlerts() {
+        List<FortuneAlert> allAlerts = new ArrayList<>();
+
+        try {
+            final PreparedStatement preparedStatement = connetion.getPreparedStatement("select * FROM FortuneAlert");
+            final ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                FortuneAlert fortuneAlert = new FortuneAlert();
+                fortuneAlert.setId(result.getInt("id"));
+                fortuneAlert.setUserId(result.getInt("userId"));
+                allAlerts.add(fortuneAlert);
             }
         } catch (SQLException e) {
             e.printStackTrace();

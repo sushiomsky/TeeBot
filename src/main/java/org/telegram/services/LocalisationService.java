@@ -36,51 +36,6 @@ public class LocalisationService {
     private ResourceBundle turkish;
     private ResourceBundle esperanto;
 
-    private class CustomClassLoader extends ClassLoader {
-        public CustomClassLoader(ClassLoader parent) {
-            super(parent);
-
-        }
-
-        public InputStream getResourceAsStream(String name) {
-            InputStream utf8in = getParent().getResourceAsStream(name);
-            if (utf8in != null) {
-                try {
-                    byte[] utf8Bytes = new byte[utf8in.available()];
-                    utf8in.read(utf8Bytes, 0, utf8Bytes.length);
-                    byte[] iso8859Bytes = new String(utf8Bytes, "UTF-8").getBytes("ISO-8859-1");
-                    return new ByteArrayInputStream(iso8859Bytes);
-                } catch (IOException e) {
-                    e.printStackTrace();
-
-                } finally {
-                    try {
-                        utf8in.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return null;
-        }
-    }
-
-    /**
-     * Singleton
-     *
-     * @return Instance of localisation service
-     */
-    public static LocalisationService getInstance() {
-        if (instance == null) {
-            synchronized (LocalisationService.class) {
-                if (instance == null) {
-                    instance = new LocalisationService();
-                }
-            }
-        }
-        return instance;
-    }
-
     /**
      * Private constructor due to singleton
      */
@@ -98,10 +53,12 @@ public class LocalisationService {
         supportedLanguages.put("it", "Italiano");
         esperanto = ResourceBundle.getBundle("localisation.strings", new Locale("eo", "EO"), loader);
         supportedLanguages.put("eo", "Esperanto");
-        /*
+
         german = ResourceBundle.getBundle("localisation.strings", new Locale("de", "DE"), loader);
         supportedLanguages.put("de", "Deutsch");
-        italian = ResourceBundle.getBundle("localisation.strings", new Locale("it", "IT"), loader);
+
+        /*
+		italian = ResourceBundle.getBundle("localisation.strings", new Locale("it", "IT"), loader);
         supportedLanguages.put("it", "Italian");
         french = ResourceBundle.getBundle("localisation.strings", new Locale("fr", "FR"), loader);
         supportedLanguages.put("fr", "French");
@@ -118,6 +75,22 @@ public class LocalisationService {
         turkish = ResourceBundle.getBundle("localisation.strings", new Locale("tr", "TR"), loader);
          */
     }
+
+	/**
+	 * Singleton
+	 *
+	 * @return Instance of localisation service
+	 */
+	public static LocalisationService getInstance() {
+		if (instance == null) {
+			synchronized (LocalisationService.class) {
+				if (instance == null) {
+					instance = new LocalisationService();
+				}
+			}
+		}
+		return instance;
+	}
 
     /**
      * Get a string in default language (en)
@@ -164,9 +137,10 @@ public class LocalisationService {
                 case "eo":
                     result = esperanto.getString(key);
                     break;
-                /*case "de":
-                    result = german.getString(key);
+				case "de":
+					result = german.getString(key);
                     break;
+				/*
                 case "fr":
                     result = french.getString(key);
                     break;
@@ -215,4 +189,33 @@ public class LocalisationService {
     public String getLanguageCodeByName(String language) {
         return supportedLanguages.entrySet().stream().filter(x -> x.getValue().equals(language)).findFirst().get().getKey();
     }
+
+	private class CustomClassLoader extends ClassLoader {
+		public CustomClassLoader(ClassLoader parent) {
+			super(parent);
+
+		}
+
+		public InputStream getResourceAsStream(String name) {
+			InputStream utf8in = getParent().getResourceAsStream(name);
+			if (utf8in != null) {
+				try {
+					byte[] utf8Bytes = new byte[utf8in.available()];
+					utf8in.read(utf8Bytes, 0, utf8Bytes.length);
+					byte[] iso8859Bytes = new String(utf8Bytes, "UTF-8").getBytes("ISO-8859-1");
+					return new ByteArrayInputStream(iso8859Bytes);
+				} catch (IOException e) {
+					e.printStackTrace();
+
+				} finally {
+					try {
+						utf8in.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			return null;
+		}
+	}
 }

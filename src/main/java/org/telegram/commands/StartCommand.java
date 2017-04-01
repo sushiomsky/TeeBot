@@ -35,7 +35,8 @@ public class StartCommand extends BotCommand {
             databseManager.setUserStateForCommandsBot(user.getId(), true);
 			messageBuilder.append("Welcome " + user.getFirstName());
 			messageBuilder.append("i scheduled fortune for you!");
-        }
+			databseManager.createNewFortuneAlert(user.getId(), chat.getId());
+		}
 
         SendMessage answer = new SendMessage();
         answer.setChatId(chat.getId().toString());
