@@ -30,12 +30,11 @@ public class StartCommand extends BotCommand {
         String userName = user.getFirstName() + " " + user.getLastName();
 
         if (databseManager.getUserStateForCommandsBot(user.getId())) {
-            messageBuilder.append("Hi ").append(userName).append("\n");
-            messageBuilder.append("i think we know each other already!");
+            messageBuilder.append("fortune is already scheduled for you!");
         } else {
             databseManager.setUserStateForCommandsBot(user.getId(), true);
             messageBuilder.append("Welcome ").append(userName).append("\n");
-            messageBuilder.append("this bot will demonstrate you the command feature of the Java TelegramBots API!");
+            messageBuilder.append("i scheduled fortune for you!");
         }
 
         SendMessage answer = new SendMessage();
