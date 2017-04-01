@@ -32,7 +32,7 @@ public class StopCommand extends BotCommand {
 
         if (dbManager.getUserStateForCommandsBot(user.getId())) {
             dbManager.setUserStateForCommandsBot(user.getId(), false);
-            String userName = user.getFirstName() + " " + user.getLastName();
+			String userName = user.getFirstName();
 
             SendMessage answer = new SendMessage();
             answer.setChatId(chat.getId().toString());
