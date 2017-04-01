@@ -33,8 +33,8 @@ public class StartCommand extends BotCommand {
             messageBuilder.append("fortune is already scheduled for you!");
         } else {
             databseManager.setUserStateForCommandsBot(user.getId(), true);
-            messageBuilder.append("Welcome ").append(userName).append("\n");
-            messageBuilder.append("i scheduled fortune for you!");
+			messageBuilder.append("Welcome " + user.getFirstName());
+			messageBuilder.append("i scheduled fortune for you!");
         }
 
         SendMessage answer = new SendMessage();
