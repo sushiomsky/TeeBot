@@ -11,7 +11,10 @@ import org.telegram.telegrambots.bots.commands.BotCommand;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,12 +32,21 @@ public class QuizCommand extends BotCommand {
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
-        DatabaseManager databseManager = DatabaseManager.getInstance();
+        DatabaseManager databaseManager = DatabaseManager.getInstance();
 
         StringBuilder messageBuilder = new StringBuilder();
-        messageBuilder.append("Frage?");
+        try {
+            ResultSet question = databaseManager.getRandomQuestion();
+            messageBuilder.append(question.getString("question"));
+
+            HashMap<Integer, String> answers = databaseManager.getAnswers(question.getInt("id"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // Create ReplyKeyboardMarkup object
+        //ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
        // ForceReplyKeyboard keyboardMarkup = new ForceReplyKeyboard();
         // Create the keyboard (list of keyboard rows)
@@ -42,6 +54,7 @@ public class QuizCommand extends BotCommand {
         // Create a keyboard row
         KeyboardRow row = new KeyboardRow();
         // Set each button, you can also use KeyboardButton objects if you need something else than text
+
         row.add("Row 1 Button 1");
         row.add("Row 1 Button 2");
         row.add("Row 1 Button 3");
@@ -57,6 +70,8 @@ public class QuizCommand extends BotCommand {
         keyboard.add(row);
         // Set the keyboard to the markup
         keyboardMarkup.setKeyboard(keyboard);
+        keyboardMarkup.setOneTimeKeyboad(true);
+
         // Add it to the message
 
         SendMessage answer = new SendMessage();

@@ -19,8 +19,8 @@ public class BotConfig {
     public static final String DIRECTIONS_TOKEN = "297094488:AAHxQhVrHqT2X9M19QnfHFLL8ykl0CZpc0U";
     public static final String DIRECTIONS_USER = "BitnaesserBot";
 
-    public static final String RAE_TOKEN = "342704785:AAEmfNRKaCskYlHx7EacRIjfQYH2c2zuff0";
-    public static final String RAE_USER = "SokratesBot";
+    public static final String RAE_TOKEN = "297094488:AAHxQhVrHqT2X9M19QnfHFLL8ykl0CZpc0U";
+    public static final String RAE_USER = "BitnaesserBot";
 
     public static final String WEBHOOK_TOKEN = "343698709:AAEen8bKWR3Dk1Akgm2X-FFEBqjfRkjucCY";
     public static final String WEBHOOK_USER = "DoubleOrNothingBot";

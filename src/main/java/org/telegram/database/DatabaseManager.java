@@ -14,9 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Ruben Bermudez
@@ -660,6 +658,35 @@ public class DatabaseManager {
         }catch (SQLException e) {
             e.printStackTrace();
             return "Dennis should repair me! I lost DB connectivity :(";
+        }
+    }
+
+    public ResultSet getRandomQuestion() {
+        try {
+            final PreparedStatement preparedStatement = connetion.getPreparedStatement("SELECT * FROM questions ORDER BY RAND() DESC LIMIT 10");
+            final ResultSet result = preparedStatement.executeQuery();
+            result.next();
+            return result;
+            //return result.getString("message");
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public HashMap getAnswers(int questionId) {
+        try {
+            final PreparedStatement preparedStatement = connetion.getPreparedStatement("SELECT * FROM answers WHERE question_id=" + questionId + " ORDER BY RAND() DESC");
+            final ResultSet result = preparedStatement.executeQuery();
+            HashMap answers = new HashMap();
+
+            while (result.next()){
+                answers.put(result.getInt(("id")), result.getString("message"));
+            }
+            return answers;
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
