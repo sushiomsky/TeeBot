@@ -632,6 +632,18 @@ public class DatabaseManager {
         return updatedRows > 0;
     }
 
+	public boolean deleteFortuneAlertsForUser(Integer userId) {
+		int updatedRows = 0;
+		try {
+			final PreparedStatement preparedStatement = connetion.getPreparedStatement("DELETE FROM FortuneAlert WHERE userId=?");
+			preparedStatement.setInt(1, userId);
+			updatedRows = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return updatedRows > 0;
+	}
+
     public List<WeatherAlert> getAllAlerts() {
         List<WeatherAlert> allAlerts = new ArrayList<>();
 

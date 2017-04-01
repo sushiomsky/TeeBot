@@ -36,9 +36,10 @@ public class CommandsHandler extends TelegramLongPollingCommandBot {
     public CommandsHandler() {
 		super();
 		startAlertTimers();
+//		String language = DatabaseManager.getInstance().getUserLanguage(message.getFrom().getId());
 
-        register(new FortuneCommand());
-        register(new StartCommand());
+		register(new FortuneCommand());
+		register(new StartCommand());
         register(new StopCommand());
         HelpCommand helpCommand = new HelpCommand(this);
         register(helpCommand);
@@ -66,12 +67,12 @@ public class CommandsHandler extends TelegramLongPollingCommandBot {
     }
 
 	private void startAlertTimers() {
-		TimerExecutor.getInstance().startExecutionEveryDayAt(new CustomTimerTask("First day alert", -1) {
+		TimerExecutor.getInstance().startExecutionEveryDayAt(new CustomTimerTask("daily alert", -1) {
 			@Override
 			public void execute() {
 				sendAlerts();
 			}
-		}, 19, 30, 0);
+		}, 18, 30, 0);
 	}
 
 	private void sendAlerts() {

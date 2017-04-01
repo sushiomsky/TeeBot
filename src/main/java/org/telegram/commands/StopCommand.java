@@ -32,11 +32,13 @@ public class StopCommand extends BotCommand {
 
         if (dbManager.getUserStateForCommandsBot(user.getId())) {
             dbManager.setUserStateForCommandsBot(user.getId(), false);
+            dbManager.deleteFortuneAlertsForUser(user.getId());
+
 			String userName = user.getFirstName();
 
             SendMessage answer = new SendMessage();
             answer.setChatId(chat.getId().toString());
-            answer.setText("Daily fortune is disabled now." + userName + "\n" + "Hope to see you soon!");
+            answer.setText("Daily fortune is disabled now." + "\n" + "Hope to see you soon!");
 
             try {
                 absSender.sendMessage(answer);
