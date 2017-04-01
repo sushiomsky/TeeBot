@@ -8,10 +8,14 @@ import org.telegram.telegrambots.bots.AbsSender;
 import org.telegram.telegrambots.bots.commands.BotCommand;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.logging.BotLogger;
-
 /**
  * This commands starts the conversation with the bot
  *
+ *
+ fortune - Call fortune
+ start - Get fortune daily...
+ stop - Stop daily fortune
+ help - This help message
  * @author Timo Schulz (Mit0x2)
  */
 public class FortuneCommand extends BotCommand {

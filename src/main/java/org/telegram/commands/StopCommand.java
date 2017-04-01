@@ -36,7 +36,7 @@ public class StopCommand extends BotCommand {
 
             SendMessage answer = new SendMessage();
             answer.setChatId(chat.getId().toString());
-            answer.setText("Good bye " + userName + "\n" + "Hope to see you soon!");
+            answer.setText("Daily fortune is disabled now." + userName + "\n" + "Hope to see you soon!");
 
             try {
                 absSender.sendMessage(answer);
